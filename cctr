@@ -1,0 +1,9 @@
+#!/bin/bash
+
+export SCRIPT_PATH=$0
+export SOURCE=$1
+export DESTINATION=$2
+python cctr.py
+
+
+

@@ -1,0 +1,7 @@
+__pycache__
+
+# pyenv specific
+.python-version
+
+# virtual env
+env
