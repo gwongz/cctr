@@ -89,3 +89,14 @@ def test_upper_class_specifier():
     target = subprocess.check_output(["tr", "a-z", "[:upper:]"], stdin=ps.stdout, text=True)
 
     assert result == target == "HELLO!\n"
+
+def test_alnum_class_specifier():
+    """Verify [:alnum:] is expanded to include all alphanumeric characters"""
+    input_args = ['echo', 'hello!']
+    ps = subprocess.Popen(input_args, stdout=subprocess.PIPE)
+    result = subprocess.check_output(["cctr", "[:alnum:]", "x"], stdin=ps.stdout, text=True)
+
+    ps = subprocess.Popen(input_args, stdout=subprocess.PIPE)
+    target = subprocess.check_output(["tr", "[:alnum:]", "x"], stdin=ps.stdout, text=True)
+
+    assert result == target == "xxxxx!\n"

@@ -3,11 +3,15 @@ import re
 import string
 import sys
 
+
 import constants
+
+
 
 CHARACTER_SPECIFIER_MAP = {
     "upper": string.ascii_uppercase,
     "lower": string.ascii_lowercase,
+    "alnum": f"{string.digits}{string.ascii_uppercase}{string.ascii_lowercase}",
 }
 
 def is_range_specifier(specifier):
@@ -38,6 +42,8 @@ class RangeExpander(Expander):
     """
     Concrete class for subsitutions to be made for a range of characters.
     For example, "a-z"
+
+    Only supports ascii character ranges
     """
     def __init__(self, raw_value):
         self.value = raw_value
