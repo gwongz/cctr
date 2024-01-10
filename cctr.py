@@ -2,11 +2,16 @@
 import re
 import string
 import sys
+from enum import Enum
 
 
 import constants
 
-
+class Mode(Enum):
+    """Enum to determine whether to substitute, squeeze or delete characters"""
+    DELETE = "1"
+    SQUEEZE = "2"
+    SUBSTITUTE = "3"
 
 CHARACTER_SPECIFIER_MAP = {
     "upper": string.ascii_uppercase,
@@ -116,9 +121,30 @@ def substitute():
 
     tr_map = str.maketrans(pattern, target)
 
-    for line in sys.stdin:
+    while True:
+        line = sys.stdin.readline()
+        if not line:
+            break
+        output = line.translate(tr_map)
+        print(output, end="")
+
+def delete():
+    """Delete all characters in source set"""
+    print(f"These are the characters to delete: {constants.SOURCE}")
+
+    chars_to_delete = {char: None for char in constants.SOURCE}
+    tr_map = str.maketrans(chars_to_delete)
+    while True:
+        line = sys.stdin.readline()
+        if not line:
+            break
         output = line.translate(tr_map)
         print(output, end="")
 
 if __name__ == '__main__':
-    substitute()
+    if constants.MODE == Mode.SUBSTITUTE.value:
+        substitute()
+    elif constants.MODE == Mode.DELETE.value:
+        delete()
+    elif constants.MODE == Mode.SQUEEZE.value:
+        raise NotImplementedError("Squeeze is not implemented yet")

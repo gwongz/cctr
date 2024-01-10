@@ -5,3 +5,4 @@ import os
 SCRIPT_PATH = os.environ.get('SCRIPT_PATH')
 SOURCE = os.environ.get('SOURCE')
 DESTINATION = os.environ.get('DESTINATION')
+MODE = os.environ.get('MODE', '3')

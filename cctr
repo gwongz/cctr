@@ -1,9 +1,39 @@
 #!/bin/bash
+while getopts "d:s:" opt; do
+    case $opt in
+        d)
+            # option -d is available
+            export MODE=1
+            export SOURCE=$OPTARG
+            ;;
+        s)
+            # option -s is available
+            export MODE=2
+            export SOURCE=$OPTARG
+            ;;
+        \?)
+            # Invalid option
+            echo "Invalid option: -$OPTARG" >&2
+            exit 1
+            ;;
+    esac
+done
 
-export SCRIPT_PATH=$0
-export SOURCE=$1
-export DESTINATION=$2
-python cctr.py
+if [ $OPTIND -eq 1 ]; then
+    # no options were specified
+    export SOURCE=$1
+    export DESTINATION=$2
+    export MODE=3
+fi
 
+if [ -p /dev/stdin ]; then
+    # piped value is available
+    InputObject=$(cat /dev/stdin)
+    echo "$InputObject" | python cctr.py -
 
-
+else
+    # accept user input until EOF
+    while read line || [[ -n "$line" ]]; do
+        echo "$line" | python cctr.py -
+    done
+fi
