@@ -26,6 +26,12 @@ if [ $OPTIND -eq 1 ]; then
     export MODE=3
 fi
 
+# exit if -d option passed and extra argument was provided
+if [ $MODE == 1 ] && ! [ -z "$3" ]; then
+    echo "mode is delete and third argument is not empty"
+    exit 1
+fi
+
 if [ -p /dev/stdin ]; then
     # piped value is available
     InputObject=$(cat /dev/stdin)
