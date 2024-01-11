@@ -11,9 +11,9 @@ import constants
 class Mode(Enum):
     """Enum to determine whether to substitute, squeeze or delete characters"""
 
-    DELETE = "1"
-    SQUEEZE = "2"
-    SUBSTITUTE = "3"
+    TRANSLATE = "1"
+    DELETE = "2"
+    SQUEEZE = "3"
 
 
 CHARACTER_SPECIFIER_MAP = {
@@ -117,8 +117,8 @@ class ExpanderFactory:
         return expander
 
 
-def substitute():
-    """Copies the standard input to the standard output with substitution of selected characters"""
+def translate():
+    """Copies the standard input to the standard output with translation of selected characters"""
     source_expander = ExpanderFactory.get_expander(constants.SOURCE)
     destination_expander = ExpanderFactory.get_expander(constants.DESTINATION)
 
@@ -143,7 +143,7 @@ def substitute():
 
 
 def delete():
-    """Delete all characters in source set"""
+    """Delete all characters specified in source set"""
     expander = ExpanderFactory.get_expander(constants.SOURCE)
     chars_to_delete = expander.expand()
 
@@ -158,8 +158,8 @@ def delete():
 
 
 if __name__ == "__main__":
-    if constants.MODE == Mode.SUBSTITUTE.value:
-        substitute()
+    if constants.MODE == Mode.TRANSLATE.value:
+        translate()
     elif constants.MODE == Mode.DELETE.value:
         delete()
     elif constants.MODE == Mode.SQUEEZE.value:

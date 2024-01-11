@@ -5,5 +5,5 @@ import os
 SCRIPT_PATH = os.environ.get("SCRIPT_PATH")
 SOURCE = os.environ.get("SOURCE")
 DESTINATION = os.environ.get("DESTINATION")
-# default to substitution mode
-MODE = os.environ.get("MODE", "3")
+# default to translate mode
+MODE = os.environ.get("MODE", "1")

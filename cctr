@@ -3,12 +3,12 @@ while getopts "d:s:" opt; do
     case $opt in
         d)
             # option -d is available
-            export MODE=1
+            export MODE=2
             export SOURCE=$OPTARG
             ;;
         s)
             # option -s is available
-            export MODE=2
+            export MODE=3
             export SOURCE=$OPTARG
             ;;
         \?)
@@ -23,12 +23,11 @@ if [ $OPTIND -eq 1 ]; then
     # no options were specified
     export SOURCE=$1
     export DESTINATION=$2
-    export MODE=3
+    export MODE=1
 fi
 
 # exit if -d option passed and extra argument was provided
-if [ $MODE == 1 ] && ! [ -z "$3" ]; then
-    echo "mode is delete and third argument is not empty"
+if [ $MODE == 2 ] && ! [ -z "$3" ]; then
     exit 1
 fi
 
