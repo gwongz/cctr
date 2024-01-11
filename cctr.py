@@ -9,7 +9,7 @@ import constants
 
 
 class Mode(Enum):
-    """Enum to determine whether to substitute, squeeze or delete characters"""
+    """Enum to determine whether to translate, squeeze or delete characters"""
 
     TRANSLATE = "1"
     DELETE = "2"
@@ -44,16 +44,16 @@ class Expander:
     """Interface for handling a translation"""
 
     def expand(self):
-        """Method for creating source and destination set"""
+        """Method for creating a character set from a specifier"""
         raise NotImplementedError
 
 
 class RangeExpander(Expander):
     """
     Concrete class for subsitutions to be made for a range of characters.
-    For example, "a-z"
+    For example, a-z.
 
-    Only supports ascii character ranges
+    Only supports ascii character ranges.
     """
 
     def __init__(self, raw_value):
@@ -70,7 +70,7 @@ class RangeExpander(Expander):
 
 class ClassExpander(Expander):
     """
-    Concrete class for substitutions represented by a character class.
+    Concrete class for expanding a character class specified by a class.
     For example, "[:upper:]"
     """
 
@@ -88,7 +88,7 @@ class ClassExpander(Expander):
     def expand(self):
         class_name = self._get_class_name()
         if not self._is_valid_class(class_name):
-            raise ValueError("Invald class specifier")
+            raise NotImplementedError(f"Class specifier {self.value} not supported")
         return CHARACTER_SPECIFIER_MAP.get(class_name)
 
 
